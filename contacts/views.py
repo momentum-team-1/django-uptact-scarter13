@@ -39,10 +39,7 @@ def add_note(request, contact_pk):
             note.save()
             return redirect(to='list_contacts')
 
-    return render(request, "contact/add_note.html", {"form": form})
-"""
-Wondering if I need the return here, or if I just need a reload of the page and a link to return to list_contacts
-"""
+    return render(request, "contact/add_note.html", {"form": form, "contact": contact})
 
 
 
