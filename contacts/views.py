@@ -10,6 +10,12 @@ def list_contacts(request):
                   {"contacts": contacts})
 
 
+def show_contact(request, pk):
+    contact = get_object_or_404(Contact, pk=pk)
+    return render(request, "contacts/show_contact.html", {"contact": contact})
+
+
+
 def add_contact(request):
     if request.method == 'GET':
         form = ContactForm()
@@ -20,6 +26,24 @@ def add_contact(request):
             return redirect(to='list_contacts')
 
     return render(request, "contacts/add_contact.html", {"form": form})
+
+def add_note(request, contact_pk):
+    contact = get_object_or_404(Contact, pk=contact_pk)
+    if request.method == 'GET':
+        form = NoteForm()
+    else:
+        form = NoteForm(data=request.POST)
+        if form.is_valid():
+            note = form.save(commit=false)
+            note.contact = contact
+            note.save()
+            return redirect(to='list_contacts')
+
+    return render(request, "contact/add_note.html", {"form": form})
+"""
+Wondering if I need the return here, or if I just need a reload of the page and a link to return to list_contacts
+"""
+
 
 
 def edit_contact(request, pk):
