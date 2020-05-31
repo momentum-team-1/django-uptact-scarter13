@@ -38,7 +38,7 @@ def add_note(request, contact_pk):
             note = form.save(commit=False)
             note.contact = contact
             note.save()
-            return redirect(to='list_contacts')
+            return redirect(to='show_contact', pk=contact.pk)
 
     return render(request, "contacts/add_note.html", {"form": form, "contact": contact})
 
