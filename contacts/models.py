@@ -22,6 +22,9 @@ class Contact(models.Model):
     birthday = models.DateField(null=True, blank=True)
 
 class Note(models.Model):
-    contact_note = models.ForeignKey(to=Contact, on_delete=models.CASCADE, related_name="contact_notes")
-    note = models.CharField(max_length=500, null=True, blank=True)
-    date = models.DateField()
+    contact = models.ForeignKey(to=Contact, on_delete=models.CASCADE, related_name="notes", null=True, blank=True)
+    text = models.TextField(null=True, blank=True)
+    date = models.DateField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.text
